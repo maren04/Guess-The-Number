@@ -1,6 +1,7 @@
 import random
 import time
 import threading
+import math
 
 score = 0
 level = 1
@@ -34,18 +35,19 @@ def mult_div(lvl, operand):
     return question, answer
 
 def exp_log(lvl, operand):
-    random_1 = random.randint(20 - lvl, lvl - 17)
+    random_1 = random.randint(20 - lvl, lvl - 19)
     if operand == "^" and lvl != 25 or lvl < 25:
-        random_2 = random.randint(0, lvl - 19)
+        random_2 = random.randint(0 + round(lvl / 5 - 4), round(lvl / 4) - 4)
         answer = int(random_1 ** random_2)
         question = str(random_1) + " ^ " + str(random_2)
     else:
-        random_2 = random.randint(lvl - 8, (lvl - 8) * 2)
-        answer = int(random_1 / random_2)
+        if random_1 == 0 or random_1 == 1 or random_1 == -1:
+            random_1 = 2
+        answer = random.randint(1, level - 23)
+        random_2 = random_1 ** answer
         question = str(random_1) + " log " + str(random_2)
     return question, answer
 
-# Countdown per level
 def countdown():
     global time_up
     global time_left
@@ -68,7 +70,6 @@ def loose():
     final_score()
     return "The right answer is: " + str(operation[1]) + "\nYou got: " + str(round(score)) + " points, better luck next time!"
     
-
 # Let the game start!
 print("GUESS THE NUMBER")
 
@@ -79,7 +80,6 @@ if input("Press enter to start or write y for Rules ") == "y":
 print("Level 1: ")
 while level <= 30:
 
-    # All levels get assigned an operation
     if level < 5:
         operations = [add_sub(level, "+")]
     elif level == 5:
@@ -107,20 +107,16 @@ while level <= 30:
     operation = random.choice(operations)
     print(operation[0])
 
-    # Multiple threads for the countdown and input to work
+    # Multiple threads for simultanious input and countdown
     countdown_event.clear()
     countdown_thread = threading.Thread(target=countdown)
     countdown_thread.start()
-
-    # User input during the countdown
     user_input = None
     while not user_input and not time_up:
         user_input = input()
     score += time_left
-
     countdown_event.set()
     countdown_thread.join()
-
     if time_up:
         break
     
