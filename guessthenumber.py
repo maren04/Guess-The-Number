@@ -5,7 +5,7 @@ import threading
 global time_up
 global time_left
 global high_score
-high_score = 0
+high_score = 0 # Could be stored in a file
 last_level: int = 30
 playing: bool = True
 
@@ -124,11 +124,12 @@ if __name__ == '__main__':
                 if input_thread.is_alive():
                     input_thread.join(0.1)
                 if user_input is not None:
+                    countdown_event.set()
                     break
             countdown_thread.join()
             if time_up:
                 break
-            
+
             # Check if the user input is correct
             try:
                 user_input = int(user_input)
