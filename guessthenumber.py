@@ -48,8 +48,9 @@ def exp_log(lvl):
             random_1 = 2
         answer = ra.randint(1, level - 23) # Breaks if level is allowed <23
         tran = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
+        random_2 = random_1 ** answer # Needs to be declared before random_1
         random_1 = str(random_1).translate(tran)
-        question = f"log{random_1} ({random_1 ** answer})"
+        question = f"log{random_1} ({random_2})"
     return question, answer
 
 def countdown():
