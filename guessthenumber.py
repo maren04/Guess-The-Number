@@ -103,11 +103,11 @@ if __name__ == '__main__':
                 ops = add_sub(level)
             elif level < 10:
                 ops = add_sub(level)
-            if level >= 10 and level < 20:
+            elif level >= 10 and level < 20:
                 ops = mult_div(level)
-            if level >= 20 and level < 30:
+            elif level >= 20 and level < 30:
                 ops = exp_log(level)
-            if level == 30:
+            elif level == 30:
                 level = last_level
                 ops = add_sub(1, "+")
             print(ops[0])
