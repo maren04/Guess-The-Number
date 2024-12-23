@@ -32,8 +32,8 @@ def mult_div(lvl):
         answer = int(random_1 * random_2)
         question = f"{random_1} * {random_2}"
     else:
-        random_1 = random_2 * ra.randint(lo,hi)
-        answer = int(random_1 / random_2)
+        answer = ra.randint(lo,hi)
+        random_1 = random_2 * answer
         question = f"{random_1} / {random_2}"
     return question, answer
 
@@ -103,23 +103,23 @@ if __name__ == '__main__':
                 ops = add_sub(level)
             elif level < 10:
                 ops = add_sub(level)
-            elif level >= 10 and level < 20:
+            elif level < 20:
                 ops = mult_div(level)
-            elif level >= 20 and level < 30:
+            elif level < 30:
                 ops = exp_log(level)
             elif level == 30:
                 level = last_level
                 ops = add_sub(1, "+")
             print(ops[0])
-            
+
             # Threads to handle the countdown and user input simultaneously
             countdown_event.clear()
             countdown_thread = threading.Thread(target=countdown)
             countdown_thread.start()
-            
+
             input_thread = threading.Thread(target=get_user_input)
             input_thread.start()
-            
+
             user_input = None
             while not countdown_event.is_set():
                 if input_thread.is_alive():
@@ -135,7 +135,7 @@ if __name__ == '__main__':
             try:
                 user_input = int(user_input)
             except ValueError:
-                print("Error: NaN")
+                print("Error: NaN") # Not a number
             if user_input == ops[1] and level is not last_level:
                 level += 1
                 print(f"Level {level}:")
