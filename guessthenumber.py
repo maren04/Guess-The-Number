@@ -109,7 +109,7 @@ if __name__ == '__main__':
                 ops = exp_log(level)
             elif level == 30:
                 level = last_level
-                ops = add_sub(1, "+")
+                ops = add_sub(1)
             print(ops[0])
 
             # Threads to handle the countdown and user input simultaneously
